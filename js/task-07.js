@@ -1,10 +1,8 @@
-const inputSliderEl = document.querySelector("#font-size-control");
-const textEl = document.querySelector("#text");
+const inputSliderRef = document.querySelector("#font-size-control");
+const textRef = document.querySelector("#text");
 
-// const textFontSize = inputSliderEl.value;
-textEl.style.fontSize = `${inputSliderEl.value}px`;
+textRef.style.fontSize = `${inputSliderRef.value}px`;
 
-inputSliderEl.addEventListener("input", (event) => {
-  //   const textFontSize = event.target.value;
-  textEl.style.fontSize = `${event.target.value}px`;
+inputSliderRef.addEventListener("input", (event) => {
+  textRef.style.fontSize = `${event.target.value}px`;
 });

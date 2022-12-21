@@ -13,13 +13,25 @@ const images = [
   },
 ];
 
-const listEl = document.querySelector(".gallery");
+const listRef = document.querySelector(".gallery");
 
-const listItemsEl = images
-  .map(({ url, alt }) => `<li><img src="${url}" alt="${alt}" width="300"></li>`)
-  .join("");
+const createGalleryItems = (list, pictures) => {
+  list.style.display = "flex";
+  list.style.gap = "30px";
+  list.style.listStyleType = "none";
+  return pictures
+    .map(({ url, alt }) => `<li><img src="${url}" alt="${alt}" width="300"></li>`)
+    .join("");
+};
 
-listEl.style.display = "flex";
-listEl.style.gap = "30px";
-listEl.style.listStyleType = "none";
-listEl.insertAdjacentHTML("afterbegin", listItemsEl);
+const galleryItems = createGalleryItems(listRef, images);
+listRef.insertAdjacentHTML("beforeend", galleryItems);
+
+// const listItemsEl = images
+//   .map(({ url, alt }) => `<li><img src="${url}" alt="${alt}" width="300"></li>`)
+//   .join("");
+
+// listEl.style.display = "flex";
+// listEl.style.gap = "30px";
+// listEl.style.listStyleType = "none";
+// listEl.insertAdjacentHTML("beforeend", listItemsEl);

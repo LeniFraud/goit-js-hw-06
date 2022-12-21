@@ -4,39 +4,56 @@ function getRandomHexColor() {
 
 const createBoxesBtn = document.querySelector("[data-create]");
 const destroyBoxesBtn = document.querySelector("[data-destroy]");
-const inputEl = document.querySelector("input");
-
-let ourNumber;
-
-inputEl.addEventListener("input", (event) => {
-  ourNumber = Number(event.target.value);
-  return ourNumber;
-});
-console.log(ourNumber);
-
+const inputRef = document.querySelector("input");
 const boxesWrap = document.querySelector("#boxes");
 
-const boxes = [];
+let numberOfBoxes;
+let nextBoxSize;
 
-const createBoxes = (amount) => {
-  for (let i = 0, boxSize = 30; i < amount; i += 1, boxSize += 10) {
-    const currentBoxColor = getRandomHexColor();
-    boxes[
-      i
-    ] = `<div style="background-color: ${currentBoxColor}; width: ${boxSize}px; height: ${boxSize}px"></div>`;
+inputRef.addEventListener("input", (event) => {
+  numberOfBoxes = Number(event.target.value);
+  return numberOfBoxes;
+});
+
+createBoxesBtn.addEventListener("click", () => {
+  createBoxes(numberOfBoxes);
+});
+
+destroyBoxesBtn.addEventListener("click", destroyBoxes);
+
+function createBoxes(amount) {
+  const boxes = [];
+  if (!boxesWrap.lastElementChild) {
+    for (let i = 0, boxSize = 30; i < amount; i += 1, boxSize += 10) {
+      const currentBoxColor = getRandomHexColor();
+
+      boxes[
+        i
+      ] = `<div style="background-color: ${currentBoxColor}; width: ${boxSize}px; height: ${boxSize}px"></div>`;
+      nextBoxSize = boxSize + 10;
+    }
+  } else {
+    for (let i = 0, boxSize = nextBoxSize; i < amount; i += 1, boxSize += 10) {
+      const currentBoxColor = getRandomHexColor();
+
+      boxes[
+        i
+      ] = `<div style="background-color: ${currentBoxColor}; width: ${boxSize}px; height: ${boxSize}px"></div>`;
+      nextBoxSize = boxSize + 10;
+    }
   }
 
   const boxesString = boxes.join("");
-  boxesWrap.insertAdjacentHTML("afterbegin", boxesString);
-};
+  boxesWrap.insertAdjacentHTML("beforeend", boxesString);
+}
 
-createBoxesBtn.addEventListener("click", () => {
-  createBoxes(ourNumber);
-});
+function destroyBoxes() {
+  boxesWrap.innerHTML = "";
+}
 
-destroyBoxesBtn.addEventListener("click", () => {
-  const createdBoxes = document.querySelectorAll("#boxes div");
-  for (let i = 0; i < createdBoxes.length; i += 1) {
-    createdBoxes[i].remove();
-  }
-});
+// const destroyBoxes = () => {
+//   const createdBoxes = document.querySelectorAll("#boxes div");
+//   for (let i = 0; i < createdBoxes.length; i += 1) {
+//     createdBoxes[i].remove();
+//   }
+// };
